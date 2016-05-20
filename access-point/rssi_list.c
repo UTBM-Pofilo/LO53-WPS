@@ -12,7 +12,34 @@ char * mac_to_string(u_char * byte_mac, char * buf) {
 }
 
 void clear_outdated_values(Deque * list) {
-	// TODO
+	/** structure timeval:
+	 *		time_t tv_sec: represents the number of whole seconds of elapsed time
+	 *		long int yv_usec: the rest of the elapsed time (fraction of a second) represented as the number of microseconds
+	 */
+	struct timeval timer;
+	unsigned long long ull_timer = 0;
+	// get current time (function in sys/time.h)
+	gettimeofday(&timer, NULL);
+	ull_timer = timer.tv_sec;
+	
+	// if the list is not empty
+	if(list != NULL && list->head != NULL) {
+		// go through the RSSI list
+		Rssi_sample * currentElem = list->head;
+		Rssi_sample * prevElem = NULL;
+		// while we have elements
+		while(currentElem != NULL) {
+			// check if the current element deadline is over and update the list accordingly
+			if(currentElem->deadline < ull_timer) {
+				// TODO: delete the sample -> make usefull functions before
+			} else {
+				// deadline ok, we get the next element
+				prevElem = currentElem;
+				currentElem = currentElem->next;
+			}
+		}
+	}
+	return;
 }
 
 void clear_values(Deque * list) {
@@ -34,7 +61,30 @@ void clear_values(Deque * list) {
 }
 
 void add_value(Deque * list, int value) {
-	// TODO
+	// we consider the list can't be empty 
+	// TODO? add a value even if the list is NULL (-> create the list)
+	if(list == NULL) {
+		return;
+	}
+	
+	// init new rssi_sample
+	Rssi_sample * new_rssi_sample = NULL;
+	new_rssi_sample = (Rssi_sample*) malloc(sizeof(Rssi_sample), 1);
+	
+	// add the rssi value
+	new_rssi_sample->rssi_mW = value;
+	
+	// add the deadline
+	struct timeval timer;
+	gettimeofday(&timer, NULL);
+	new_rssi_sample->deadline = timer.tv_sec;
+	
+	new_rssi_sample->next = NULL;
+	
+	// add the sample to the list
+	// TODO: add the sample -> make usefull functions before
+	
+	return;
 }
 
 // Element functions
@@ -75,11 +125,91 @@ Element * find_mac(Element * list, u_char * mac_value) {
 }
 
 Element * add_element(Element ** list, u_char * mac_value) {
-	// TODO
+	// TODO: check that the mac_value is not already in the list (in order to be sure that a mac address is in the list only once)
+	int i = 0;
+	// init new element
+	Element * element = NULL;
+	element = (Element*) malloc(sizeof(Element), 1);
+	for(i = 0; i < 6; i++) {
+		element->mac_addr[i] = mac_value[i];
+	}
+	element->measurements.head = NULL;
+	element->measurements.tail = NULL;
+	element->next = NULL;
+	
+	// add the element to the list
+	if(*list != NULL) {
+		Element * temp = *list;
+		// go to last element
+		while(temp->next != NULL) {
+			temp = temp->next;
+		}
+		// add the new element at the end
+		temp->next = element;
+	} else {
+		*list = element;
+	}
+	
+	// return the list head pointer
+	return *list;
 }
 
+// we assume each that mac addresses are unique in the list
 void delete_element(Element ** list, Element * e) {
-	// TODO
+	// check that list and element are not null
+	if(*list == NULL || e == NULL) {
+		return;
+	}
+	
+	Element * temp = *list;
+	
+	// if the element to delete is the first of the list
+	if((*list)->mac_addr == e->mac_addr) {
+		*list = temp->next;
+		// clear rssi list before deleting element
+		Rssi_sample rssi_temp = temp->measurements.head;
+		while(rssi_temp != temp->measurements.tail) {
+			temp->measurements.head = rssi_temp->next;
+			free(rssi_temp);
+			rssi_temp = temp->measurements.head;
+		}
+		// deal with the last element
+		free(temp->measurements.tail);
+		temp->measurements.head = NULL;
+		temp->measurements.tail = NULL;
+		// delete the element
+		free(temp);
+		return;
+	}
+	
+	while(temp->next != NULL && temp->next->mac_addr != e->mac_addr) {
+		temp = temp->next;
+	}
+	
+	// we check that the element we want to delete well exists
+	if(temp->next != NULL) {
+		// temp is now the element before the one we want to delete
+		// we want to get the element after the one we want to delete in order to remake the links in the list
+		Element * temp2 = temp->next->next;
+		
+		// clear rssi list before deleting element
+		Rssi_sample rssi_temp = temp->next->measurements.head;
+		while(rssi_temp != temp->next->measurements.tail) {
+			temp->next->measurements.head = rssi_temp->next;
+			free(rssi_temp);
+			rssi_temp = temp->next->measurements.head;
+		}
+		// deal with the last element
+		free(temp->next->measurements.tail);
+		temp->next->measurements.head = NULL;
+		temp->next->measurements.tail = NULL;
+		// delete the element
+		free(temp->next);
+		
+		// remake the links in the list
+		temp->next = temp2;
+	} 
+	return;
 }
 
 void clear_empty_macs(Element ** list) {
@@ -104,7 +234,29 @@ void clear_empty_macs(Element ** list) {
 
 // Communications functions
 char * build_element(Element * e, char * buf) {
-	// TODO
+	double sum = 0.0;
+	double mean = 0.0;
+	int nb_samples = 0;
+	char mac[17];
+	mac_to_string(e->mac_addr, mac);
+	
+	// compute the mean
+	Rssi_sample * temp = e->measurements.head;
+	while(temp != NULL) {
+		// for each sample of the device
+		nb_samples++;
+		sum += temp->rssi_mW;
+		temp = temp->next;
+	}
+	mean = sum / nb_samples;
+	
+	// print for debug
+	if(nb_samples > 0) {
+		sprintf(buf, "{\"%s\":\"%.2f\",\"samples\":\"%d\"}", mac, mean, nb_samples);
+	}
+	
+	return buf;
+	
 }
 
 char * build_buffer(Element * list, char * buffer, char * my_name, u_char * macs_requested, unsigned short nb_macs) {
