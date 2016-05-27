@@ -1,5 +1,5 @@
-PREFIX=/home/flassabe/Recherche/Geoloc/Implementation/Dev.AP/openwrt/trunk/staging_dir
-export STAGING_DIR=/home/flassabe/Recherche/Geoloc/Implementation/Dev.AP/openwrt/trunk/staging_dir
+PREFIX=/home/lo53/trunk/staging_dir
+export STAGING_DIR=/home/lo53/trunk/staging_dir
 GCC=$(PREFIX)/toolchain/bin/mips-openwrt-linux-gcc
 LD=$(PREFIX)/toolchain/bin/mips-openwrt-linux-ld
 ALLFLAGS=-Wall -Werror -O2 -I$(PREFIX)/toolchain/include/ -I$(PREFIX)/target/usr/include/ -L$(PREFIX)/toolchain/lib/ -L$(PREFIX)/target/usr/lib/ -lpcap -lm -lcurl -lssl -lz -lcrypto -pthread

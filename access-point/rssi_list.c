@@ -31,7 +31,40 @@ void clear_outdated_values(Deque * list) {
 		while(currentElem != NULL) {
 			// check if the current element deadline is over and update the list accordingly
 			if(currentElem->deadline < ull_timer) {
-				// TODO: delete the sample -> make usefull functions before
+				// the list contains only one element
+				if(currentElem == list->head && currentElem->next == NULL) {
+					free(currentElem);
+					list->head = NULL;
+					list->tail = NULL;
+					currentElem = NULL;
+				}
+				// we need to delete the first element
+				else if(currentElem == list->head) {
+					// reassign the head pointer
+					list->head = currentElem->next;
+					// free the element
+					free(currentElem);
+					// reassign the pointer
+					currentElem = list->head;							
+				}
+				// we need to delete the last element
+				else if(currentElem == list->tail) {
+					// reassign the tail pointer
+					list->tail = prevElem;
+					list->tail->next = NULL;
+					// free the element
+					free(currentElem);
+					// reassign the pointer
+					currentElem = NULL;
+				//otherwise
+				} else {
+					// link the previous element to the next element
+					prevElem->next = currentElem->next;
+					// free the element
+					free(currentElem);
+					// reassign the current element to the next element
+					currentElem = prevElem->next;
+				}
 			} else {
 				// deadline ok, we get the next element
 				prevElem = currentElem;
@@ -69,7 +102,7 @@ void add_value(Deque * list, int value) {
 	
 	// init new rssi_sample
 	Rssi_sample * new_rssi_sample = NULL;
-	new_rssi_sample = (Rssi_sample*) malloc(sizeof(Rssi_sample), 1);
+	new_rssi_sample = (Rssi_sample*) malloc(sizeof(Rssi_sample));
 	
 	// add the rssi value
 	new_rssi_sample->rssi_mW = value;
@@ -82,7 +115,15 @@ void add_value(Deque * list, int value) {
 	new_rssi_sample->next = NULL;
 	
 	// add the sample to the list
-	// TODO: add the sample -> make usefull functions before
+	// if the list is empty we just assign the head to the element
+	if(list->head == NULL) {
+		list->head = new_rssi_sample;
+		list->tail = list->head;
+	// reassign the pointer of the last element to the new element
+	} else {
+		list->tail->next = new_rssi_sample;
+		list->tail = new_rssi_sample;
+	}
 	
 	return;
 }
@@ -129,7 +170,7 @@ Element * add_element(Element ** list, u_char * mac_value) {
 	int i = 0;
 	// init new element
 	Element * element = NULL;
-	element = (Element*) malloc(sizeof(Element), 1);
+	element = (Element*) malloc(sizeof(Element));
 	for(i = 0; i < 6; i++) {
 		element->mac_addr[i] = mac_value[i];
 	}
@@ -167,7 +208,8 @@ void delete_element(Element ** list, Element * e) {
 	if((*list)->mac_addr == e->mac_addr) {
 		*list = temp->next;
 		// clear rssi list before deleting element
-		Rssi_sample rssi_temp = temp->measurements.head;
+		Rssi_sample * rssi_temp;
+		*rssi_temp = *temp->measurements.head;
 		while(rssi_temp != temp->measurements.tail) {
 			temp->measurements.head = rssi_temp->next;
 			free(rssi_temp);
@@ -193,7 +235,8 @@ void delete_element(Element ** list, Element * e) {
 		Element * temp2 = temp->next->next;
 		
 		// clear rssi list before deleting element
-		Rssi_sample rssi_temp = temp->next->measurements.head;
+		Rssi_sample * rssi_temp;
+		*rssi_temp = *temp->measurements.head;
 		while(rssi_temp != temp->next->measurements.tail) {
 			temp->next->measurements.head = rssi_temp->next;
 			free(rssi_temp);
@@ -218,7 +261,7 @@ void clear_empty_macs(Element ** list) {
 	// we go through the list until NULL
 	while(temp != NULL) {
 		// if the current element has an empty rssi sample list
-		if(pTmp->measurements.head == NULL && pTmp->measurements.tail == NULL) {
+		if(temp->measurements.head == NULL && temp->measurements.tail == NULL) {
 			// store next element
 			temp2 = temp->next;
 			// delete element from the list
@@ -228,6 +271,7 @@ void clear_empty_macs(Element ** list) {
 		} else {
 			// go to next element
 			temp = temp->next;
+		}
 	}
 	return;
 }
