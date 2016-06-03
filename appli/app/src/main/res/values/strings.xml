@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LO53_Project</string>
+    <string name="edit_X">X coordonate</string>
+    <string name="edit_Y">Y coordonate</string>
+</resources>
