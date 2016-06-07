@@ -208,8 +208,9 @@ void delete_element(Element ** list, Element * e) {
 	if((*list)->mac_addr == e->mac_addr) {
 		*list = temp->next;
 		// clear rssi list before deleting element
-		Rssi_sample * rssi_temp;
-		*rssi_temp = *temp->measurements.head;
+		Rssi_sample * rssi_temp = NULL;
+		rssi_temp = (Rssi_sample*) malloc(sizeof(Rssi_sample));
+		rssi_temp = temp->measurements.head;
 		while(rssi_temp != temp->measurements.tail) {
 			temp->measurements.head = rssi_temp->next;
 			free(rssi_temp);
@@ -235,8 +236,9 @@ void delete_element(Element ** list, Element * e) {
 		Element * temp2 = temp->next->next;
 		
 		// clear rssi list before deleting element
-		Rssi_sample * rssi_temp;
-		*rssi_temp = *temp->measurements.head;
+		Rssi_sample * rssi_temp = NULL;
+		rssi_temp = (Rssi_sample*) malloc(sizeof(Rssi_sample));
+		rssi_temp = temp->measurements.head;
 		while(rssi_temp != temp->next->measurements.tail) {
 			temp->next->measurements.head = rssi_temp->next;
 			free(rssi_temp);
@@ -303,10 +305,10 @@ char * build_element(Element * e, char * buf) {
 	
 }
 
-char * build_buffer(Element * list, char * buffer, char * my_name, u_char * macs_requested, unsigned short nb_macs) {
+/*char * build_buffer(Element * list, char * buffer, char * my_name, u_char * macs_requested, unsigned short nb_macs) {
 	// TODO
-}
+}*/
 
-char * build_buffer_full(Element * list, char * buffer, char * my_name) {
+/*char * build_buffer_full(Element * list, char * buffer, char * my_name) {
 	// TODO
-}
+}*/
