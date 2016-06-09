@@ -45,7 +45,7 @@ void clear_outdated_values(Deque * list) {
 					// free the element
 					free(currentElem);
 					// reassign the pointer
-					currentElem = list->head;							
+					currentElem = list->head;
 				}
 				// we need to delete the last element
 				else if(currentElem == list->tail) {

@@ -1,43 +1,18 @@
-#include <stdio.h> /* printf, sprintf */
-#include <stdlib.h> /* exit */
-#include <unistd.h> /* read, write, close */
-#include <string.h> /* memcpy, memset */
-#include <sys/socket.h> /* socket, connect */
-#include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
-#include <netdb.h> /* struct hostent, gethostbyname */
-
-char* http_request(char *host, char *message_fmt);
+#include "http.h"
 
 void error(const char *msg) { 
 	perror(msg); 
 	exit(0); 
 }
 
-int main(int argc,char *argv[]) {
-	char *response;
-	
-	// char *host = "http://trips.loc/api";
-	char *host = "www.google.fr";
-	char *message_fmt = "GET /arg1=%s&arg2=%s HTTP/1.0\r\n\r\n";
-	sprintf(message, message_fmt, "a", "b");
-
-	response = http_request(host, message_fmt);
-
-	printf("Response:\n%s\n",response);
-	
-	free(response);
-	return 0;
-}
-
 char* http_request(char *host, char *message_fmt) {
-	/* first what are we going to send and where are we going to send it? */
-	int port = 80;
 
 	struct hostent *server;
 	struct sockaddr_in serv_addr;
 	int sockfd, bytes, sent, received, total;
-	char message[1024], response[4096];
+	char message[MESSAGE_SIZE], response[RESPONSE_SIZE];
 
+	sprintf(message, message_fmt, "a", "b");
 	printf("Request:\n%s\n",message);
 
 	/* create the socket */
@@ -55,7 +30,7 @@ char* http_request(char *host, char *message_fmt) {
 	/* fill in the structure */
 	memset(&serv_addr, 0, sizeof(serv_addr));
 	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(port);
+	serv_addr.sin_port = htons(PORT);
 	memcpy(&serv_addr.sin_addr.s_addr,server->h_addr, server->h_length);
 
 	/* connect the socket */
