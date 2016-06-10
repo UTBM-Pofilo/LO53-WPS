@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int X_coord;
     private int Y_coord;
-    private int conv;
     private Button button_test;
     private ImageView cursor;
     private EditText X_coordinate;
@@ -115,11 +114,6 @@ public class MainActivity extends AppCompatActivity {
         timer.cancel();
         timer.start();
     }
-    //conversion metres en pixels
-    private int conversionCoordinates(float x){
-        return int(x/720);
-    }
-
 
     private View.OnClickListener btn_listener = new View.OnClickListener() {
         @Override
