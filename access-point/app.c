@@ -5,29 +5,25 @@
 #include "pcap-thread.h"
 #include "http.h"
 
-void pcap(void);
+
 void communication(void);
 
-
 int main(void) {
-	pthread_t thread_pcap, thread_com;
+	pthread_t thread_pcap/*, thread_com*/;
 
-	pthread_create(&pthread_pcap, NULL, (void * (*)(void *))pcap, NULL);
-	pthread_create(&pthread_com, NULL, (void * (*)(void *))communication, NULL);
+	pthread_create(&thread_pcap, NULL, (void * (*)(void *))pcap_function, NULL);
+	// pthread_create(&thread_com, NULL, (void * (*)(void *))communication, NULL);
 
 	pthread_join(thread_pcap, NULL);
-	pthread_join(thread_com, NULL);
+	// pthread_join(thread_com, NULL);
 
 	return 0;
-}
-
-void pcap(void) {
-
 }
 
 void communication(void) {
 
 }
+
 
 
 /*int main(int argc,char *argv[]) {

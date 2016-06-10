@@ -5,14 +5,14 @@ void error(const char *msg) {
 	exit(0); 
 }
 
-char* http_request(char *host, char *message_fmt) {
+char* http_request(char *host, char *message) {
 
 	struct hostent *server;
 	struct sockaddr_in serv_addr;
 	int sockfd, bytes, sent, received, total;
-	char message[MESSAGE_SIZE], response[RESPONSE_SIZE];
+	char response[RESPONSE_SIZE];
 
-	sprintf(message, message_fmt, "a", "b");
+	// sprintf(message, message_fmt, "a", "b");
 	printf("Request:\n%s\n",message);
 
 	/* create the socket */
@@ -79,6 +79,33 @@ char* http_request(char *host, char *message_fmt) {
 
 	return strdup(response);
 }
+
+
+void send_rssi_to_server(Element ** list, u_char * mac_value) {
+	char message[MESSAGE_SIZE];
+	char *response = "";
+	char *host = "www.google.fr";
+	char *message_fmt = "GET /api/gotcha/%s/%f HTTP/1.0\r\n\r\n";
+
+	// deal with the mac address
+	char buf[MAC_LENGTH];
+	mac_to_string(mac_value, buf);
+
+	// deal with the rssi value
+
+	Rssi_sample * temp = (*list)->measurements.head;
+	while(temp != NULL) {
+		double rssi_value= temp->rssi_mW;
+		temp = temp->next;		
+		sprintf(message, message_fmt, *buf, rssi_value);
+
+		response = http_request(host, message);
+		printf("Response:\n%s\n",response);
+	}
+
+	free(response);
+}
+
 
 
 

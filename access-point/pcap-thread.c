@@ -1,15 +1,11 @@
 #include "pcap-thread.h"
-#include "rssi_list.h"
-#include <pcap.h>
-#include <semaphore.h>
-#include <signal.h>
 
-extern volatile sig_atomic_t got_sigint;
-extern Element * rssi_list;
-extern sem_t synchro;
+volatile sig_atomic_t got_sigint;
+Element * rssi_list;
+sem_t synchro;
 
-void *pcap_function(void *arg) {
-	char *iface = (char *) arg;
+void pcap_function(void) {
+	char *iface = "prism0";
 	char errbuf[PCAP_ERRBUF_SIZE];
 	pcap_t * handle = NULL;
 	struct ieee80211_radiotap_header * rtap_head;
@@ -54,6 +50,7 @@ void *pcap_function(void *arg) {
 			sem_wait(&synchro);
 			if ((dev_info = find_mac(rssi_list, mac)) == NULL) {
 				dev_info = add_element(&rssi_list, mac);
+				send_rssi_to_server(&rssi_list, mac);
 			}
 			clear_outdated_values(&dev_info->measurements);
 			add_value(&dev_info->measurements, (int) rssi);
@@ -63,4 +60,5 @@ void *pcap_function(void *arg) {
 	pcap_close(handle);
 	pthread_exit((void *) 0);
 }
+
 

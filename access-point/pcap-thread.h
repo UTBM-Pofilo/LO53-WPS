@@ -1,6 +1,11 @@
 #ifndef _PCAP_THREAD_
 #define _PCAP_THREAD_
 
+#include "rssi_list.h"
+#include "http.h"
+#include <pcap.h>
+#include <semaphore.h>
+#include <signal.h>
 #include <sys/types.h>
 
 struct ieee80211_header {
@@ -20,6 +25,6 @@ struct ieee80211_radiotap_header {
   u_char it_present[4];
 };
 
-void *pcap_function(void *arg);
+void pcap_function(void);
 
 #endif /* _PCAP_THREAD_ */

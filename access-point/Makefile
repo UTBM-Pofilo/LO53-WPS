@@ -6,15 +6,15 @@ ALLFLAGS=-Wall -Werror -O2 -I$(PREFIX)/toolchain/include/ -I$(PREFIX)/target/usr
 GCCFLAGS=-Wall -Werror -O2 -I$(PREFIX)/toolchain/include/ -I$(PREFIX)/target/usr/include/
 LDFLAGS=-L$(PREFIX)/toolchain/lib/ -L$(PREFIX)/target/usr/lib/ -lpcap -lm -pthread 
 
-rssi: rssi_list.c
-	$(GCC) $(ALLFLAGS) rssi_list.c http-test.c -o tests
+rssi: app.c
+	$(GCC) $(ALLFLAGS) pcap-thread.c http.c rssi_list.c app.c -o LO53-Group1
 
 %.o: %.c %.h
 	$(GCC) $(GCCFLAGS) -o $@ -c $< 
 
 clean:
 	rm -f *.o
-	rm -f rssi_list
+	rm -f LO53-Group1
 
 backupclean:
 	rm -f *~
