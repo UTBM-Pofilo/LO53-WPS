@@ -6,8 +6,12 @@ ALLFLAGS=-Wall -Werror -O2 -I$(PREFIX)/toolchain/include/ -I$(PREFIX)/target/usr
 GCCFLAGS=-Wall -Werror -O2 -I$(PREFIX)/toolchain/include/ -I$(PREFIX)/target/usr/include/
 LDFLAGS=-L$(PREFIX)/toolchain/lib/ -L$(PREFIX)/target/usr/lib/ -lpcap -lm -pthread 
 
-rssi: app.c
-	$(GCC) $(ALLFLAGS) pcap-thread.c http.c rssi_list.c app.c -o LO53-Group1
+default: app.c
+	$(GCC) $(ALLFLAGS) pcap-thread.c http.c util.c app.c -o LO53-Group1
+
+# make ID=2 IFACE=wlan0 param
+param: app.c
+	$(GCC) $(ALLFLAGS) -DAP_ID=${ID} -DIFACE=\"${IFACE}\" pcap-thread.c http.c util.c app.c -o LO53-Group1
 
 %.o: %.c %.h
 	$(GCC) $(GCCFLAGS) -o $@ -c $< 

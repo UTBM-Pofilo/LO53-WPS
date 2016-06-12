@@ -1,11 +1,10 @@
 #include "pcap-thread.h"
 
 volatile sig_atomic_t got_sigint;
-Element * rssi_list;
 sem_t synchro;
 
 void pcap_function(void) {
-	char *iface = "prism0";
+	char *iface = IFACE;
 	char errbuf[PCAP_ERRBUF_SIZE];
 	pcap_t * handle = NULL;
 	struct ieee80211_radiotap_header * rtap_head;
@@ -16,17 +15,19 @@ void pcap_function(void) {
 	u_char first_flags;
 	int offset = 0;
 	char rssi;
-	Element * dev_info;
 
 	// Open pcap handle to sniff traffic
 	handle = pcap_open_live(iface, BUFSIZ, 1, 1000, errbuf);
+	
 	if (handle == NULL) {
 		printf("Could not open pcap on %s\n", iface);
 		pthread_exit((void *) -1);
 	}
-  
+
+	sem_post(&synchro);
 	while (got_sigint == 0) {
 		packet = pcap_next(handle, &header);
+
 		if (!packet) {
 			continue;
 		}
@@ -34,6 +35,7 @@ void pcap_function(void) {
 		rtap_head = (struct ieee80211_radiotap_header *) packet;
 		int len = (int) rtap_head->it_len[0] + 256 * (int) rtap_head->it_len[1];
 		eh = (struct ieee80211_header *) (packet + len);
+
 		if ((eh->frame_control & 0x03) == 0x01) {
 			mac = eh->source_addr;
 			first_flags = rtap_head->it_present[0];
@@ -47,14 +49,17 @@ void pcap_function(void) {
 			//printf("%d bytes -- %02X:%02X:%02X:%02X:%02X:%02X -- RSSI: %d dBm\n",
 			//       len, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5], (int) rssi);
 			// We got some message issued by a terminal (FromDS=0,ToDS=1)
-			sem_wait(&synchro);
-			if ((dev_info = find_mac(rssi_list, mac)) == NULL) {
-				dev_info = add_element(&rssi_list, mac);
-				send_rssi_to_server(&rssi_list, mac);
+
+			char mac_string[MAC_LENGTH];
+			mac_to_string(mac, mac_string);
+
+			if(check_macs(mac_string) == 0) {
+				printf("\n-----> mac: %s / rssi: %d", mac_string, rssi);
+				send_rssi_to_server((int) rssi, mac_string);
+			} else {
+				printf("\n> mac: %s / rssi: %d", mac_string, rssi);
 			}
-			clear_outdated_values(&dev_info->measurements);
-			add_value(&dev_info->measurements, (int) rssi);
-			sem_post(&synchro);
+
 		}
 	}
 	pcap_close(handle);

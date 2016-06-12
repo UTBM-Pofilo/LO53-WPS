@@ -1,7 +1,7 @@
 #ifndef _PCAP_THREAD_
 #define _PCAP_THREAD_
 
-#include "rssi_list.h"
+#include "util.h"
 #include "http.h"
 #include <pcap.h>
 #include <semaphore.h>
@@ -28,3 +28,4 @@ struct ieee80211_radiotap_header {
 void pcap_function(void);
 
 #endif /* _PCAP_THREAD_ */
+
