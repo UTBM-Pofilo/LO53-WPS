@@ -6,17 +6,18 @@
 #include <stdlib.h>
 #include <math.h>
 #include <arpa/inet.h>
-#include <sys/time.h>
 #include "http.h"
 
 #ifndef IFACE
-	#define IFACE ((char *)"any")
+	#define IFACE ((char *)"wlan0")
 #endif
 
 #ifndef AP_ID
 	#define AP_ID 1
 #endif
-#define HOST     ((char *)"192.168.1.108")
+#ifndef HOST
+	#define HOST ((char *)"192.168.1.42")
+#endif
 #define PORT 80
 #define MAC_LENGTH 17
 

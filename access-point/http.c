@@ -15,7 +15,7 @@ char* http_request(char *host, char *message, int *success) {
 	time_t t;
 	time(&t);
 
-	printf("\n%s | Request:%s", ctime(&t), message);
+	// printf("\n%s | Request:%s", ctime(&t), message);
 
 	/* create the socket */
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -87,7 +87,7 @@ char* http_request(char *host, char *message, int *success) {
 
 void send_rssi_to_server(int rssi, char * mac_string) {
 	char message[MESSAGE_SIZE];
-	char *response = "";
+	/*char *response = "";*/
 	char *host = HOST;
 	char *message_fmt = "GET /api/gotcha/%d/%s/%d HTTP/1.0\r\n\r\n";
 	int value = 0;
@@ -96,12 +96,12 @@ void send_rssi_to_server(int rssi, char * mac_string) {
 		
 	sprintf(message, message_fmt, AP_ID, mac_string, rssi);
 
-	response = http_request(host, message, success);
-	if (*success == 0) {
-		printf("\nResponse:\n%s",response);
+	/*response = */http_request(host, message, success);
+	/*if (*success == 0) {
+		printf("\nResponse:%s",response);
 	} else {
-		printf("\nImpossible to send the rssi value to the server\n");
-	}
+		printf("\nImpossible to send the rssi value to the server");
+	}*/
 	
 }
 

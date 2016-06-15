@@ -5,7 +5,6 @@
 #include <sys/socket.h> /* socket, connect */
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
 #include <netdb.h> /* struct hostent, gethostbyname */
-#include <time.h>
 #include "util.h"
 
 #define MESSAGE_SIZE 1024
