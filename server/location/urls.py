@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^calibrate/(?P<mac_address>[0-9a-f:]+)/(?P<x>[0-9.]+)/(?P<y>[0-9.]+)/(?P<z>[0-9.]+)$', views.calibrate, name='calibrate'),
     url(r'^findme/(?P<mac_address>[0-9a-f:]+)$', views.findme, name='findme'),
     url(r'^gotcha/(?P<ap_id>[0-9]+)/(?P<mac_address>[0-9a-f:]+)/(?P<RSSI>[^/]+)$', views.gotcha, name='gotcha'),
+    url(r'^reset$', views.reset, name='reset'),
     url(r'^check$', views.check, name='check'),
 ]
 

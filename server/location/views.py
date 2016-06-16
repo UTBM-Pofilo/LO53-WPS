@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from .models import Measurement, Device, Location, Calibration
 from django.db.models import Avg
+import threading
 
 
-NB_MESURMENT_REQUIRED = 4
-NB_ACCESS_POINTS = 2
+NB_MESURMENT_REQUIRED = 50
+NB_ACCESS_POINTS = 3
 
+lock = threading.Lock()
 
 def calibrate(request, mac_address, x, y, z):
     w = Device.objects.filter(mac=mac_address)
@@ -31,8 +33,9 @@ def calibrate(request, mac_address, x, y, z):
                 ss_value = -95
             c = Calibration(loc_id=l, ap_id=i, ss_value=ss_value)
             c.save()
-        Measurement.objects.filter(dv_id=w).delete()
-        w.delete()
+        with lock:
+            Measurement.objects.filter(dv_id=w).delete()
+            w.delete()
         return JsonResponse({'code':'DONE'})
     else:
         return JsonResponse({'code':'WAIT'})
@@ -68,7 +71,7 @@ def findme(request, mac_address):
             calibrations = Calibration.objects.filter(loc_id=location)
             distance = 0
             for i in range(1,NB_ACCESS_POINTS+1):
-                distance += pow(calibrations.get(ap_id=i).ss_value - ss_values[i],2)
+                distance += pow(calibrations.filter(ap_id=i)[0].ss_value - ss_values[i],2)
             if distance < min_distance:
                 min_distance = distance
                 min_location = location
@@ -76,22 +79,32 @@ def findme(request, mac_address):
         preload = {'code':'MAP', 'x':min_location.x,'y':min_location.y,'z':min_location.z}
         
         #Clean the database
-        Measurement.objects.filter(dv_id=w).delete()
-        w.delete()
+        with lock:
+            Measurement.objects.filter(dv_id=w).delete()
+            w.delete()
         return JsonResponse(preload)
     else:
         return JsonResponse({'code':'WAIT'})
 
 
 def gotcha(request, ap_id, mac_address, RSSI):
-    w = Device.objects.filter(mac=mac_address)
-    if w:
-        m = Measurement(ap_id=ap_id, dv_id=w[0], ss_value=RSSI)
-        m.save()
+    with lock:
+        w = Device.objects.filter(mac=mac_address)
+        if w:
+            m = Measurement(ap_id=ap_id, dv_id=w[0], ss_value=RSSI)
+            m.save()
+    return JsonResponse({'code':0})
+
+
+
+def reset(request):
+    with lock:
+        Measurement.objects.all().delete()
+        Calibration.objects.all().delete()
+        Location.objects.all().delete()
+        Device.objects.all().delete()
     return JsonResponse({'code':0})
 
 
 
 
-def rssi_distance(rssi_1, rssi_2):
-    return rssi_2-rssi_1
