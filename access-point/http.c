@@ -1,3 +1,11 @@
+/*!
+ * \file http.c
+ * \brief HTTP Functions
+ * \author vmerat
+ * \version 0.1
+ * \date 16/06/16
+ * HTTP Functions to sends request using this protocol
+ */
 #include "http.h"
 
 void error(const char *msg, int *success, int sockfd) { 

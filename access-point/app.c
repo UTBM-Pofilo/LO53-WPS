@@ -1,12 +1,23 @@
+/*!
+ * \file app.c
+ * \brief File that contains the main of the application
+ * \author vmerat
+ * \version 0.1
+ * \date 16/06/16
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <pcap.h>
 
-#include "util.h"
+#include "mac.h"
 #include "pcap-thread.h"
 #include "http.h"
 
-
+/*!
+ * \fn int main(void)
+ * \brief Entrance of the program 
+ * \return an int corresponding to the success of the function or not
+ */
 int main(void) {
 	
 	pcap_t *handle;

@@ -1,6 +1,17 @@
+/*!
+ * \file pcap-thread.c
+ * \brief HTTP Stuff to deal with packets catched by libpcap
+ * \author vmerat
+ * \version 0.1
+ * \date 16/06/16
+ */
 #include "pcap-thread.h"
 
-// from https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0ahUKEwjwyMTz-6fNAhWGAxoKHUrvCFwQFgggMAA&url=ftp%3A%2F%2Fftp.fau.de%2Fnetbsd%2FNetBSD-current%2Fsrc%2Fexternal%2Fbsd%2Fwpa%2Fdist%2Fsrc%2Futils%2Fradiotap.c&usg=AFQjCNGG9M2y3NzJy335dUf4cpfmBWgvAQ&cad=rja
+/*!
+ * \struct radiotap_align_size
+ * \brief Alignements and size of the radiotap header field
+ * From radiotap.c here http://goo.gl/8pk0R9
+ */
 const struct radiotap_align_size radiotap_field_sizes[] = { { 8, 8 }, { 1, 1 }, { 1, 1 }, { 2, 4 }, { 2, 2 }, { 1, 1 }, { 1, 1 }, { 2, 2 }, { 2, 2 }, { 2, 2 }, { 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 }, { 2, 2 }, { 2, 2 }, { 1, 1 }, { 1, 1 }, { 0, 0 }, { 1, 3 }, { 4, 8 }, { 2, 12 }                    
 	
 	/*
@@ -83,7 +94,5 @@ void pcap_function(unsigned char *args, const struct pcap_pkthdr *header, const 
 		}
 	}
 }
-
-
 
 

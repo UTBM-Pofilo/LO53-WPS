@@ -1,4 +1,11 @@
-#include "util.h"
+/*!
+ * \file mac.c
+ * \brief Usefull MAC Functions
+ * \author vmerat
+ * \version 0.1
+ * \date 16/06/16
+ */
+#include "mac.h"
 
 
 u_char * string_to_mac(char * buf, u_char * byte_mac) {

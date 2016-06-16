@@ -1,5 +1,12 @@
-#ifndef _RSSI_LIST_
-#define _RSSI_LIST_
+/*!
+ * \file mac.h
+ * \brief Usefull MAC Functions
+ * \author vmerat
+ * \version 0.1
+ * \date 16/06/16
+ */
+#ifndef _MAC_H_
+#define _MAC_H_
 
 #include <stdio.h>
 #include <string.h>
@@ -23,6 +30,7 @@
 
 
 /*!
+ * \fn u_char *string_to_mac(char * buf, u_char * byte_mac)
  * \brief Function string_to_mac converts a human-readable MAC to its binary counterpart.
  * \return the 6-bytes binary MAC
  * \param buf the buffer containing the MAC string
@@ -31,6 +39,7 @@
 u_char *string_to_mac(char * buf, u_char * byte_mac);
 
 /*!
+ * \fn char * mac_to_string(u_char * byte_mac, char * buf)
  * \brief mac_to_string opposite function to string_to_mac.
  * Takes a binary MAC address (such as extracted from IEEE802.11 header by libpcap)
  * and converts it to a human-readable string.
@@ -41,7 +50,8 @@ u_char *string_to_mac(char * buf, u_char * byte_mac);
 char * mac_to_string(u_char * byte_mac, char * buf);
 
 /*!
- * \call an http request to the server to get the list of mac address to deal with
+ * \fn int check_macs(char* mac_string)
+ * \brief call an http request to the server to get the list of mac address to deal with
  * Check if the mac address in parameter is in the list.
  * \return 0 if the mac is in the list, -1 else
  * \param mac_string an already allocated char buffer
@@ -49,5 +59,5 @@ char * mac_to_string(u_char * byte_mac, char * buf);
 int check_macs(char* mac_string);
 
 
-#endif
+#endif /* _MAC_H_ */
 
