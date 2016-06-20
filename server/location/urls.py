@@ -1,3 +1,6 @@
+## @package urls
+# This is the landing file of the API. Every URLs are defines here and will redirect to a specific view.
+
 from django.conf.urls import url
 
 from . import views

@@ -1,3 +1,6 @@
+## @package views
+# Contain the MVC-view part.Each actions of the API land on a function stored in this file.
+
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from .models import Measurement, Device, Location, Calibration
@@ -10,6 +13,11 @@ NB_ACCESS_POINTS = 3
 
 lock = threading.Lock()
 
+## Used in the calibration mode ; it add the mac_address in the Device table at the first call, so that the access points will look for it. When during a later call, there is enough measurments, we made the average of them and move the result in the Calibration table.
+# @param mac_address MAC address of the device to find
+# @param x The X-coordinate of the device
+# @param y The Y-coordinate of the device
+# @param z The Z-coordinate of the device
 def calibrate(request, mac_address, x, y, z):
     w = Device.objects.filter(mac=mac_address)
     if w:
@@ -41,11 +49,12 @@ def calibrate(request, mac_address, x, y, z):
         return JsonResponse({'code':'WAIT'})
         
 
-
+## Send back the list of all the MAC address included in the Device table, i.e. all the MAC address that the access points should search
 def check(request):
     return HttpResponse("\n"+"\n".join(Device.get_macs())+"\n")
 
-
+## Used in the location mode ; it add the mac_address in the Device table at the first call, so that the access points will look for it. When during a later call, there is enough measurments, we made the average of them and compare the result with the datas stored in the Calibration table to find the position of the device.
+# @param mac_address MAC address of the device to find
 def findme(request, mac_address):
     w = Device.objects.filter(mac=mac_address)
     if w:
@@ -87,6 +96,10 @@ def findme(request, mac_address):
         return JsonResponse({'code':'WAIT'})
 
 
+## get a new RSSI value of a given device from an AP
+# @param ap_id Identifier of the access point
+# @param mac_address MAC address of the device on which the RSSI measurment was performed
+# @param RSSI the RSSI-value read
 def gotcha(request, ap_id, mac_address, RSSI):
     with lock:
         w = Device.objects.filter(mac=mac_address)
@@ -96,7 +109,7 @@ def gotcha(request, ap_id, mac_address, RSSI):
     return JsonResponse({'code':0})
 
 
-
+## Perform a complete reset of the database
 def reset(request):
     with lock:
         Measurement.objects.all().delete()
