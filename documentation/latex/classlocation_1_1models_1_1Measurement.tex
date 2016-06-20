@@ -1,0 +1,61 @@
+\hypertarget{classlocation_1_1models_1_1Measurement}{\section{location.\-models.\-Measurement Class Reference}
+\label{classlocation_1_1models_1_1Measurement}\index{location.\-models.\-Measurement@{location.\-models.\-Measurement}}
+}
+
+
+Class linked to the Measurment table in the database.  
+
+
+Inheritance diagram for location.\-models.\-Measurement\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classlocation_1_1models_1_1Measurement}
+\end{center}
+\end{figure}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classlocation_1_1models_1_1Measurement_a763d73da289bc8117bdbded89c80a12f}{ss\-\_\-average}
+\begin{DoxyCompactList}\small\item\em Compute the average of all the measurments for a given device and a given access-\/point. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classlocation_1_1models_1_1Measurement_a6e9937292430758f3c99f0a8ee641ecc}{tuple {\bfseries ap\-\_\-id} = models.\-Integer\-Field(default=0)}\label{classlocation_1_1models_1_1Measurement_a6e9937292430758f3c99f0a8ee641ecc}
+
+\item 
+\hypertarget{classlocation_1_1models_1_1Measurement_a566d8eb7ccdca69a0bcfb600572dcb2f}{tuple {\bfseries dv\-\_\-id} = models.\-Foreign\-Key(\hyperlink{classlocation_1_1models_1_1Device}{Device}, on\-\_\-delete=models.\-C\-A\-S\-C\-A\-D\-E)}\label{classlocation_1_1models_1_1Measurement_a566d8eb7ccdca69a0bcfb600572dcb2f}
+
+\item 
+\hypertarget{classlocation_1_1models_1_1Measurement_a51b46b31cf97b48211bf482e24c05884}{tuple {\bfseries ss\-\_\-value} = models.\-Float\-Field(default=0)}\label{classlocation_1_1models_1_1Measurement_a51b46b31cf97b48211bf482e24c05884}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class linked to the Measurment table in the database. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classlocation_1_1models_1_1Measurement_a763d73da289bc8117bdbded89c80a12f}{\index{location\-::models\-::\-Measurement@{location\-::models\-::\-Measurement}!ss\-\_\-average@{ss\-\_\-average}}
+\index{ss\-\_\-average@{ss\-\_\-average}!location::models::Measurement@{location\-::models\-::\-Measurement}}
+\subsubsection[{ss\-\_\-average}]{\setlength{\rightskip}{0pt plus 5cm}def location.\-models.\-Measurement.\-ss\-\_\-average (
+\begin{DoxyParamCaption}
+\item[{}]{ap\-\_\-id, }
+\item[{}]{dv\-\_\-id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classlocation_1_1models_1_1Measurement_a763d73da289bc8117bdbded89c80a12f}
+
+
+Compute the average of all the measurments for a given device and a given access-\/point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ap\-\_\-id} & Identifier of the access point \\
+\hline
+{\em dv\-\_\-id} & Identifier of the device \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+server/location/models.\-py\end{DoxyCompactItemize}

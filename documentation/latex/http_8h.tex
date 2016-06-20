@@ -1,0 +1,121 @@
+\hypertarget{http_8h}{\section{access-\/point/http.h File Reference}
+\label{http_8h}\index{access-\/point/http.\-h@{access-\/point/http.\-h}}
+}
+
+
+H\-T\-T\-P Functions.  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\-h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\-h$>$}\\*
+{\ttfamily \#include $<$netdb.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}mac.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{http_8h_aeca90e1c1c62b70670514ffc18c9dfd4}{\#define {\bfseries M\-E\-S\-S\-A\-G\-E\-\_\-\-S\-I\-Z\-E}~1024}\label{http_8h_aeca90e1c1c62b70670514ffc18c9dfd4}
+
+\item 
+\hypertarget{http_8h_a48c115751f544f6dc2232111ecf30708}{\#define {\bfseries R\-E\-S\-P\-O\-N\-S\-E\-\_\-\-S\-I\-Z\-E}~4096}\label{http_8h_a48c115751f544f6dc2232111ecf30708}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{http_8h_af9d7b3062e02587caeaa3ca144561c49}{http\-\_\-request} (char $\ast$host, char $\ast$message, int $\ast$success)
+\begin{DoxyCompactList}\small\item\em Send an http request to the host and the message in parameter. \end{DoxyCompactList}\item 
+void \hyperlink{http_8h_a5a7fd6804526d002c56d864853f4695e}{error} (const char $\ast$msg, int $\ast$success, int sockfd)
+\begin{DoxyCompactList}\small\item\em Print the message on the screen, close the socket and update the success value. \end{DoxyCompactList}\item 
+void \hyperlink{http_8h_a947214d1e90f2e5474ca4bf78db7db72}{send\-\_\-rssi\-\_\-to\-\_\-server} (int rssi, char $\ast$mac\-\_\-string)
+\begin{DoxyCompactList}\small\item\em Send to the server the rssi value associated with the mac address. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+H\-T\-T\-P Functions. \begin{DoxyAuthor}{Author}
+vmerat 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\-1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+16/06/16 H\-T\-T\-P Functions to sends request using this protocol 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{http_8h_a5a7fd6804526d002c56d864853f4695e}{\index{http.\-h@{http.\-h}!error@{error}}
+\index{error@{error}!http.h@{http.\-h}}
+\subsubsection[{error}]{\setlength{\rightskip}{0pt plus 5cm}void error (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{msg, }
+\item[{int $\ast$}]{success, }
+\item[{int}]{sockfd}
+\end{DoxyParamCaption}
+)}}\label{http_8h_a5a7fd6804526d002c56d864853f4695e}
+
+
+Print the message on the screen, close the socket and update the success value. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & an already allocated char buffer \\
+\hline
+{\em success} & an already allocated int \\
+\hline
+{\em sockfd} & corresponding to the socket we need to close \\
+\hline
+\end{DoxyParams}
+\hypertarget{http_8h_af9d7b3062e02587caeaa3ca144561c49}{\index{http.\-h@{http.\-h}!http\-\_\-request@{http\-\_\-request}}
+\index{http\-\_\-request@{http\-\_\-request}!http.h@{http.\-h}}
+\subsubsection[{http\-\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ http\-\_\-request (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{host, }
+\item[{char $\ast$}]{message, }
+\item[{int $\ast$}]{success}
+\end{DoxyParamCaption}
+)}}\label{http_8h_af9d7b3062e02587caeaa3ca144561c49}
+
+
+Send an http request to the host and the message in parameter. 
+
+\begin{DoxyReturn}{Returns}
+response an already allocated char buffer 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em host} & an already allocated char buffer \\
+\hline
+{\em message} & an already allocated char buffer \\
+\hline
+{\em success} & which will be set at -\/1 if an error occured \\
+\hline
+\end{DoxyParams}
+\hypertarget{http_8h_a947214d1e90f2e5474ca4bf78db7db72}{\index{http.\-h@{http.\-h}!send\-\_\-rssi\-\_\-to\-\_\-server@{send\-\_\-rssi\-\_\-to\-\_\-server}}
+\index{send\-\_\-rssi\-\_\-to\-\_\-server@{send\-\_\-rssi\-\_\-to\-\_\-server}!http.h@{http.\-h}}
+\subsubsection[{send\-\_\-rssi\-\_\-to\-\_\-server}]{\setlength{\rightskip}{0pt plus 5cm}void send\-\_\-rssi\-\_\-to\-\_\-server (
+\begin{DoxyParamCaption}
+\item[{int}]{rssi, }
+\item[{char $\ast$}]{mac\-\_\-string}
+\end{DoxyParamCaption}
+)}}\label{http_8h_a947214d1e90f2e5474ca4bf78db7db72}
+
+
+Send to the server the rssi value associated with the mac address. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em rssi} & an int corresponding to the rssi value \\
+\hline
+{\em mac\-\_\-string} & an already allocated char buffer \\
+\hline
+\end{DoxyParams}

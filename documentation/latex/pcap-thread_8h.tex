@@ -1,0 +1,109 @@
+\hypertarget{pcap-thread_8h}{\section{access-\/point/pcap-\/thread.h File Reference}
+\label{pcap-thread_8h}\index{access-\/point/pcap-\/thread.\-h@{access-\/point/pcap-\/thread.\-h}}
+}
+
+
+H\-T\-T\-P Stuff to deal with packets catched by libpcap.  
+
+
+{\ttfamily \#include \char`\"{}mac.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}http.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$pcap.\-h$>$}\\*
+{\ttfamily \#include $<$sys/types.\-h$>$}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$ctype.\-h$>$}\\*
+{\ttfamily \#include $<$errno.\-h$>$}\\*
+{\ttfamily \#include $<$sys/socket.\-h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\-h$>$}\\*
+{\ttfamily \#include $<$arpa/inet.\-h$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structieee80211__header}{ieee80211\-\_\-header}
+\begin{DoxyCompactList}\small\item\em I\-E\-E\-E 802.\-11 Header Header of protocol I\-E\-E\-E 802.\-11. \end{DoxyCompactList}\item 
+struct \hyperlink{structieee80211__radiotap__header}{ieee80211\-\_\-radiotap\-\_\-header}
+\begin{DoxyCompactList}\small\item\em I\-E\-E\-E 802.\-11 Radiotap Header Header of radiotap protocol I\-E\-E\-E 802.\-11. \end{DoxyCompactList}\item 
+struct \hyperlink{structradiotap__align__size}{radiotap\-\_\-align\-\_\-size}
+\begin{DoxyCompactList}\small\item\em Alignements and size of the radiotap header field From radiotap.\-c here \href{http://goo.gl/8pk0R9}{\tt http\-://goo.\-gl/8pk0\-R9}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{pcap-thread_8h_ad550c7fda7a393cfa09f34a00ed2d4c4}{ieee80211\-\_\-radiotap\-\_\-type} \{ \\*
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-T\-S\-F\-T} = 0, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-F\-L\-A\-G\-S} = 1, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-R\-A\-T\-E} = 2, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-C\-H\-A\-N\-N\-E\-L} = 3, 
+\\*
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-F\-H\-S\-S} = 4, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-D\-B\-M\-\_\-\-A\-N\-T\-S\-I\-G\-N\-A\-L} = 5, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-D\-B\-M\-\_\-\-A\-N\-T\-N\-O\-I\-S\-E} = 6, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-L\-O\-C\-K\-\_\-\-Q\-U\-A\-L\-I\-T\-Y} = 7, 
+\\*
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-T\-X\-\_\-\-A\-T\-T\-E\-N\-U\-A\-T\-I\-O\-N} = 8, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-D\-B\-\_\-\-T\-X\-\_\-\-A\-T\-T\-E\-N\-U\-A\-T\-I\-O\-N} = 9, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-D\-B\-M\-\_\-\-T\-X\-\_\-\-P\-O\-W\-E\-R} = 10, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-A\-N\-T\-E\-N\-N\-A} = 11, 
+\\*
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-D\-B\-\_\-\-A\-N\-T\-S\-I\-G\-N\-A\-L} = 12, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-D\-B\-\_\-\-A\-N\-T\-N\-O\-I\-S\-E} = 13, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-R\-X\-\_\-\-F\-L\-A\-G\-S} = 14, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-T\-X\-\_\-\-F\-L\-A\-G\-S} = 15, 
+\\*
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-R\-T\-S\-\_\-\-R\-E\-T\-R\-I\-E\-S} = 16, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-D\-A\-T\-A\-\_\-\-R\-E\-T\-R\-I\-E\-S} = 17, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-M\-C\-S} = 19, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-A\-M\-P\-D\-U\-\_\-\-S\-T\-A\-T\-U\-S} = 20, 
+\\*
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-V\-H\-T} = 21, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-N\-A\-M\-E\-S\-P\-A\-C\-E} = 29, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-V\-E\-N\-D\-O\-R\-\_\-\-N\-A\-M\-E\-S\-P\-A\-C\-E} = 30, 
+{\bfseries I\-E\-E\-E80211\-\_\-\-R\-A\-D\-I\-O\-T\-A\-P\-\_\-\-E\-X\-T} = 31
+ \}
+\begin{DoxyCompactList}\small\item\em I\-E\-E\-E 802.\-11 Radiotap Flags Flags of the radiotap header Taken from \href{http://osxr.org:8080/linux/source/include/net/ieee80211_radiotap.h}{\tt http\-://osxr.\-org\-:8080/linux/source/include/net/ieee80211\-\_\-radiotap.\-h}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{pcap-thread_8h_aa3e276e495ceedb3b1b14b175798790f}{pcap\-\_\-function} (unsigned char $\ast$args, const struct pcap\-\_\-pkthdr $\ast$header, const unsigned char $\ast$packet)
+\begin{DoxyCompactList}\small\item\em Function called when a packet is captured by libpcap. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+H\-T\-T\-P Stuff to deal with packets catched by libpcap. \begin{DoxyAuthor}{Author}
+vmerat 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\-1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+16/06/16 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{pcap-thread_8h_aa3e276e495ceedb3b1b14b175798790f}{\index{pcap-\/thread.\-h@{pcap-\/thread.\-h}!pcap\-\_\-function@{pcap\-\_\-function}}
+\index{pcap\-\_\-function@{pcap\-\_\-function}!pcap-thread.h@{pcap-\/thread.\-h}}
+\subsubsection[{pcap\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}void pcap\-\_\-function (
+\begin{DoxyParamCaption}
+\item[{unsigned char $\ast$}]{args, }
+\item[{const struct pcap\-\_\-pkthdr $\ast$}]{header, }
+\item[{const unsigned char $\ast$}]{packet}
+\end{DoxyParamCaption}
+)}}\label{pcap-thread_8h_aa3e276e495ceedb3b1b14b175798790f}
+
+
+Function called when a packet is captured by libpcap. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em args} & arguments sent by libpcap \\
+\hline
+{\em header} & an already allocated pcap\-\_\-pkthdr that contains the timestamp and the size of the packet \\
+\hline
+{\em packet} & a pointer to the packet itself \\
+\hline
+\end{DoxyParams}

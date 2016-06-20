@@ -1,0 +1,96 @@
+\hypertarget{mac_8c}{\section{access-\/point/mac.c File Reference}
+\label{mac_8c}\index{access-\/point/mac.\-c@{access-\/point/mac.\-c}}
+}
+
+
+Usefull M\-A\-C Functions.  
+
+
+{\ttfamily \#include \char`\"{}mac.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+u\-\_\-char $\ast$ \hyperlink{mac_8c_a9847a88fcad0fe8b8491e63f998c6f80}{string\-\_\-to\-\_\-mac} (char $\ast$buf, u\-\_\-char $\ast$byte\-\_\-mac)
+\begin{DoxyCompactList}\small\item\em Function string\-\_\-to\-\_\-mac converts a human-\/readable M\-A\-C to its binary counterpart. \end{DoxyCompactList}\item 
+char $\ast$ \hyperlink{mac_8c_a46866a8e7e9131319052b71f5f7d632d}{mac\-\_\-to\-\_\-string} (u\-\_\-char $\ast$byte\-\_\-mac, char $\ast$buf)
+\begin{DoxyCompactList}\small\item\em mac\-\_\-to\-\_\-string opposite function to string\-\_\-to\-\_\-mac. Takes a binary M\-A\-C address (such as extracted from I\-E\-E\-E802.\-11 header by libpcap) and converts it to a human-\/readable string. \end{DoxyCompactList}\item 
+int \hyperlink{mac_8c_a2061c8fb6e7f733171404128b22daf27}{check\-\_\-macs} (char $\ast$mac\-\_\-string)
+\begin{DoxyCompactList}\small\item\em call an http request to the server to get the list of mac address to deal with Check if the mac address in parameter is in the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Usefull M\-A\-C Functions. \begin{DoxyAuthor}{Author}
+vmerat 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\-1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+16/06/16 
+\end{DoxyDate}
+
+
+\subsection{Function Documentation}
+\hypertarget{mac_8c_a2061c8fb6e7f733171404128b22daf27}{\index{mac.\-c@{mac.\-c}!check\-\_\-macs@{check\-\_\-macs}}
+\index{check\-\_\-macs@{check\-\_\-macs}!mac.c@{mac.\-c}}
+\subsubsection[{check\-\_\-macs}]{\setlength{\rightskip}{0pt plus 5cm}int check\-\_\-macs (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{mac\-\_\-string}
+\end{DoxyParamCaption}
+)}}\label{mac_8c_a2061c8fb6e7f733171404128b22daf27}
+
+
+call an http request to the server to get the list of mac address to deal with Check if the mac address in parameter is in the list. 
+
+\begin{DoxyReturn}{Returns}
+0 if the mac is in the list, -\/1 else 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em mac\-\_\-string} & an already allocated char buffer \\
+\hline
+\end{DoxyParams}
+\hypertarget{mac_8c_a46866a8e7e9131319052b71f5f7d632d}{\index{mac.\-c@{mac.\-c}!mac\-\_\-to\-\_\-string@{mac\-\_\-to\-\_\-string}}
+\index{mac\-\_\-to\-\_\-string@{mac\-\_\-to\-\_\-string}!mac.c@{mac.\-c}}
+\subsubsection[{mac\-\_\-to\-\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}char $\ast$ mac\-\_\-to\-\_\-string (
+\begin{DoxyParamCaption}
+\item[{u\-\_\-char $\ast$}]{byte\-\_\-mac, }
+\item[{char $\ast$}]{buf}
+\end{DoxyParamCaption}
+)}}\label{mac_8c_a46866a8e7e9131319052b71f5f7d632d}
+
+
+mac\-\_\-to\-\_\-string opposite function to string\-\_\-to\-\_\-mac. Takes a binary M\-A\-C address (such as extracted from I\-E\-E\-E802.\-11 header by libpcap) and converts it to a human-\/readable string. 
+
+\begin{DoxyReturn}{Returns}
+the string M\-A\-C 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em byte\-\_\-mac} & the binary M\-A\-C \\
+\hline
+{\em buf} & an already allocated char buffer, returned by the function. \\
+\hline
+\end{DoxyParams}
+\hypertarget{mac_8c_a9847a88fcad0fe8b8491e63f998c6f80}{\index{mac.\-c@{mac.\-c}!string\-\_\-to\-\_\-mac@{string\-\_\-to\-\_\-mac}}
+\index{string\-\_\-to\-\_\-mac@{string\-\_\-to\-\_\-mac}!mac.c@{mac.\-c}}
+\subsubsection[{string\-\_\-to\-\_\-mac}]{\setlength{\rightskip}{0pt plus 5cm}u\-\_\-char $\ast$ string\-\_\-to\-\_\-mac (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{buf, }
+\item[{u\-\_\-char $\ast$}]{byte\-\_\-mac}
+\end{DoxyParamCaption}
+)}}\label{mac_8c_a9847a88fcad0fe8b8491e63f998c6f80}
+
+
+Function string\-\_\-to\-\_\-mac converts a human-\/readable M\-A\-C to its binary counterpart. 
+
+\begin{DoxyReturn}{Returns}
+the 6-\/bytes binary M\-A\-C 
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em buf} & the buffer containing the M\-A\-C string \\
+\hline
+{\em byte\-\_\-mac} & a 6-\/byte buffer to store the result. byte\-\_\-mac is returned by the function. \\
+\hline
+\end{DoxyParams}
